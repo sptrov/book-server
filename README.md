@@ -35,7 +35,7 @@ Before you begin, ensure you have the following installed on your machine:
 
 ## Running the Project
 
-1. Start the MongoDB server. If MongoDB is installed locally, you can start it with:
+1. Start the MongoDB server
 
 2. Run the project:
 
