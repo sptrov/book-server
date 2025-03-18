@@ -64,13 +64,6 @@ export default class Keys {
   }
 
   public static encryptData(data: object, publicKey: string) {
-    // const bytes = Buffer.byteLength(JSON.stringify(data), "utf8");
-    // console.log({
-    //   bytes,
-    //   kilobytes: bytes / 1024,
-    //   readableSize: `${bytes} bytes (${(bytes / 1024).toFixed(2)} KB)`,
-    // });
-
     const keyBuffer = Buffer.from(publicKey, "base64");
     const keyBufferBase64 = keyBuffer.toString("base64");
     const keyBufferBase64Match = keyBufferBase64.match(/.{1,64}/g);
@@ -95,7 +88,6 @@ export default class Keys {
 
   public static decrypt(encryptedData: string, privateKey: string) {
     const buffer = Buffer.from(encryptedData, "base64");
-    // return crypto.privateDecrypt(privateKey, buffer).toString();
 
     const decrypted = crypto.privateDecrypt(
       {
@@ -116,9 +108,7 @@ export default class Keys {
     encryptedKey: string;
     authTag?: string;
   } {
-    const keyBuffer = Buffer.from(publicKey, "base64");
-    const keyBufferBase64 = keyBuffer.toString("base64");
-    const keyBufferBase64Match = keyBufferBase64.match(/.{1,64}/g);
+    const keyBufferBase64Match = publicKey.match(/.{1,64}/g);
     if (!keyBufferBase64Match) {
       throw new Error("Failed to match base64 key buffer");
     }
@@ -127,12 +117,10 @@ export default class Keys {
     )}\n-----END PUBLIC KEY-----`;
 
     // Generate a random AES key and IV
-    const aesKey = crypto.randomBytes(32); // 256 bits
-    // const iv = crypto.randomBytes(16); // 128 bits
-    const iv = crypto.randomBytes(12); // 128 bits
+    const aesKey = crypto.randomBytes(32);
+    const iv = crypto.randomBytes(12);
 
     // Encrypt the data with AES
-    // const cipher = crypto.createCipheriv("aes-256-cbc", aesKey, iv);
     const cipher = crypto.createCipheriv("aes-256-gcm", aesKey, iv);
     let encryptedData = cipher.update(JSON.stringify(data), "utf8", "base64");
     encryptedData += cipher.final("base64");

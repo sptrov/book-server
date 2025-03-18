@@ -9,25 +9,22 @@ import BookOperations from "./dbOperations/BookOperations";
 
 dotenv.config();
 Database.connect();
-
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-
-const PORT = process.env.PORT || 3000;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const { privateKey } = Keys.getKeyPair();
 
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
   res.setHeader("X-Public-Server-Key", Keys.getPublicKeyBase64());
 
   next();
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get("/publicKey", (req, res) => {
+app.get("/publicKey", (_req, res) => {
   res.json({ key: Keys.getPublicKeyBase64() });
 });
 
@@ -51,8 +48,6 @@ app.get("/books", async (req, res) => {
     const books = await BookOperations.findBookByAny(query);
 
     const encryptedBooksL = Keys.hybridEncryptData(books, publicClientKey);
-
-    // const encryptedBooks = Keys.encryptData(books, publicClientKey);
 
     res.json(encryptedBooksL);
   } catch (error) {
