@@ -40,7 +40,8 @@ Before you begin, ensure you have the following installed on your machine:
 2. Run the project:
 
    ```bash
-   npm start
+   npm run build
+   npm run start
    ```
 
    or
