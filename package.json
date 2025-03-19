@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/server.js",
-    "dev": "nodemon",
+    "dev": "mkdir -p build & nodemon",
     "build": " rm -rf ./build & tsc",
     "db:seed": "ts-node src/config/database/seed.ts",
     "test": "jest",
