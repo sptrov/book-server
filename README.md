@@ -74,3 +74,7 @@ Here are some of the main API endpoints:
 - The API is protected with Zod validators to ensure that the data being processed is valid.
 - When the application starts, a public and private RSA key pair is generated and stored in the `build` folder.
 - The `POST /books` endpoint uses a combination of RSA and AES encryption to securely encrypt the body of the response.
+
+## Tests and coverage
+
+in tests folder I picked to cover the keys encryption/decryption functionality and also some tests for the api server

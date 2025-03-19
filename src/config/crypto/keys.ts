@@ -9,7 +9,6 @@ export default class Keys {
   public static getKeyPair(
     buildFolderPath = path.join(process.cwd(), "build")
   ) {
-    // const buildFolderPath = path.join(process.cwd(), "build");
     const publicKeyPath = `${buildFolderPath}/public.pem`;
     const privateKeyPath = `${buildFolderPath}/private.pem`;
 
